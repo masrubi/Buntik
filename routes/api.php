@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\LokasiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AlamatCustomerController;
+use App\Http\Controllers\Customer\AlamatCustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,8 @@ use App\Http\Controllers\AlamatCustomerController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-    
-
-});
-Route::prefix('api')->middleware('api')->group(function () {
-    Route::get('/kabupaten/{provinsiId}', [AlamatCustomerController::class, 'getKabupaten']);
-    Route::get('/kecamatan/{kabupatenId}', [AlamatCustomerController::class, 'getKecamatan']);
-    Route::get('/desa/{kecamatanId}', [AlamatCustomerController::class, 'getDesa']);
 });
 
-     
-
+Route::get('/kabupaten/{provinsiId}', [LokasiController::class, 'getKabupaten']);
+Route::get('/kecamatan/{kabupatenId}', [LokasiController::class, 'getKecamatan']);
+Route::get('/desa/{kecamatanId}', [LokasiController::class, 'getDesa']);
