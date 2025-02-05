@@ -30,7 +30,7 @@
                             @endif
                             <h4 class="header-title">Tambah Rekening Baru</h4>
                             <p class="card-title-desc"><code>Perhatikan Tulisan Dengan Baik dan Benar</code></p>
-                            <form action="{{ Route('rekening.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ Route('anggota.rekening.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
                                     <input
@@ -88,10 +88,10 @@
                                                 <td><b>{{ Str::upper($hasil->nama_rek) }}</b></td>
                                                 <td><i>{{ $hasil->no_rek }}</i></td>
                                                 <td align="center">
-                                                    <a href="{{ route('rekening.edit', $hasil->id_rekening) }}"
+                                                    <a href="{{ route('anggota.rekening.edit', $hasil->id_rekening) }}"
                                                         class="btn btn-warning waves-effect waves-light"><i
                                                             class="dripicons-pencil"></i> Edit</a>
-                                                    <form action="{{ route('rekening.destroy', $hasil->id_rekening) }}" method="POST"
+                                                    <form action="{{ route('anggota.rekening.destroy', $hasil->id_rekening) }}" method="POST"
                                                         style="display:inline"
                                                         onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
                                                         @method('delete')

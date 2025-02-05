@@ -151,7 +151,7 @@
                                                                         <dd class="col-sm-8">{{ $konfirmasi->semai }}</dd>
                                                                         <dt class="col-sm-4">Ongkir </dt>
                                                                         <dd class="col-sm-8">@php
-                                                                            echo rupiah($konfirmasi->ongkir) . ' [ ' . $konfirmasi->nama_kota . ' ]';
+                                                                            echo rupiah($konfirmasi->ongkir) . ' [ ' . $konfirmasi->nama_kabupaten . ' ]';
                                                                         @endphp</dd>
                                                                         <dt class="col-sm-4">Total Tagihan </dt>
                                                                         <dd class="col-sm-8">@php
@@ -419,7 +419,7 @@
                                                                         </dd>
                                                                         <dt class="col-sm-4">Ongkir </dt>
                                                                         <dd class="col-sm-8">@php
-                                                                            echo rupiah($konfirmasi_dp->ongkir) . ' [ ' . $konfirmasi_dp->nama_kota . ' ]';
+                                                                            echo rupiah($konfirmasi_dp->ongkir) . ' [ ' . $konfirmasi_dp->nama_kabupaten . ' ]';
                                                                         @endphp</dd>
                                                                         <dt class="col-sm-4">Total Tagihan</dt>
                                                                         <dd class="col-sm-8">
@@ -606,7 +606,7 @@
                                                                         </dd>
                                                                         <dt class="col-sm-4">Ongkir </dt>
                                                                         <dd class="col-sm-8">@php
-                                                                            echo rupiah($ongoing_dp->ongkir) . ' [ ' . $ongoing_dp->nama_kota . ' ]';
+                                                                            echo rupiah($ongoing_dp->ongkir) . ' [ ' . $ongoing_dp->nama_kabupaten . ' ]';
                                                                         @endphp</dd>
                                                                         <dt class="col-sm-4">Total</dt>
                                                                         <dd class="col-sm-8">

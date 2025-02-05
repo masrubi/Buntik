@@ -30,7 +30,7 @@
                             @endif
                             <h4 class="header-title">Buat Kategori Baru</h4>
                             <p class="card-title-desc"><code>Perhatikan Tulisan Dengan Baik dan Benar</code></p>
-                            <form action="{{ Route('kategori.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ Route('anggota.kategori.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
                                     <input
@@ -75,10 +75,10 @@
                                             <tr>
                                                 <td><b>{{ Str::upper($hasil->jenis_kategori) }}</b></td>
                                                 <td align="center">
-                                                    <a href="{{ route('kategori.edit', $hasil->id_kategori) }}"
+                                                    <a href="{{ route('anggota.kategori.edit', $hasil->id_kategori) }}"
                                                         class="btn btn-warning waves-effect waves-light"><i
                                                             class="dripicons-pencil"></i> Edit</a>
-                                                    <form action="{{ route('kategori.destroy', $hasil->id_kategori) }}" method="POST"
+                                                    <form action="{{ route('anggota.kategori.destroy', $hasil->id_kategori) }}" method="POST"
                                                         style="display:inline"
                                                         onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
                                                         @method('delete')

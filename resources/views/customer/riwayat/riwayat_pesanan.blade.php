@@ -41,7 +41,7 @@
                                                 <th data-priority="1">Nama Produk</th>
                                                 <th data-priority="3">Status</th>
                                                 <th data-priority="1">Quantity</th>
-                                                <th data-priority="3">Kota / Kab Pengiriman</th>
+                                                <th data-priority="3">Kabupaten / Kab Pengiriman</th>
                                                 <th data-priority="3">Tanggal Sampai</th>
                                                 <th data-priority="3">Invoice</th>
                                             </tr>
@@ -53,7 +53,7 @@
                                                 <td>{{ Str::title($riwayat->nama_produk) }}</td>
                                                 <td><span class="badge bg-success">{{ Str::upper($riwayat->status) }}</span></td>
                                                 <td>{{ $riwayat->quantity }} Pcs</td>
-                                                <td>{{ $riwayat->nama_kota.' [ '.$riwayat->nama_prov.' ] ' }}</td>
+                                                <td>{{ $riwayat->nama_kabupaten.' [ '.$riwayat->nama_prov.' ] ' }}</td>
                                                 <td>{{ $riwayat->updated_at }}</td>
                                                 <td><a href="{{ route('pesanan.show', $riwayat->id_pesanan) }}"
                                                     class="btn btn-success btn-sm"><i

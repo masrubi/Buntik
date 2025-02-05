@@ -12,16 +12,16 @@ class Kecamatan extends Model
 
     // Tentukan kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'name', // Nama desa
-        'kota_id', // ID kecamatan yang menjadi foreign key
+        'nama', // Nama desa
+        'kabupaten_id', // ID kecamatan yang menjadi foreign key
     ];
 
     /**
      * Relasi ke model Kecamatan
      */
-    public function kota()
+    public function kabupaten()
     {
-        return $this->belongsTo(Kota::class, 'kota_id');
+        return $this->belongsTo(Kabupaten::class, 'kabupaten_id');
     }
 
     public function desa()

@@ -96,7 +96,7 @@ class DAlamatCustomerController extends Controller
                 'telp' => 'required',
                 'pos' => 'required',
                 'provinsi' => 'required',
-                'kota' => 'required',
+                'kabupaten' => 'required',
                 'alamat' => 'required'
             ]);
             $provinsi = $request->provinsi;
@@ -104,10 +104,10 @@ class DAlamatCustomerController extends Controller
             $id_provinsi = $provinsi_result[0];
             $nama_provinsi = $provinsi_result[1];
 
-            $kota = $request->kota;
-            $kota_result = explode('|', $kota);
-            $id_kota = $kota_result[0];
-            $nama_kota = $kota_result[1];
+            $kabupaten = $request->kabupaten;
+            $kabupaten_result = explode('|', $kabupaten);
+            $id_kabupaten = $kabupaten_result[0];
+            $nama_kabupaten = $kabupaten_result[1];
 
             
 
@@ -117,8 +117,8 @@ class DAlamatCustomerController extends Controller
                 'nama_penerima' => $request->nama,
                 'id_provinsi' => $id_provinsi,
                 'nama_prov' => $nama_provinsi,
-                'id_kota' => $id_kota,
-                'nama_kota' => $nama_kota,
+                'id_kabupaten' => $id_kabupaten,
+                'nama_kabupaten' => $nama_kabupaten,
                 'kode_pos' => $request->pos,
                 'alamat' => $request->alamat,
 

@@ -12,7 +12,7 @@ class Provinsi extends Model
 
     // Tentukan kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'name', // Nama desa
+        'nama', // Nama desa
         
     ];
 
@@ -21,8 +21,8 @@ class Provinsi extends Model
      */
    
 
-    public function kota()
+    public function kabupaten()
     {
-        return $this->hasMany(Kota::class, 'provinsi_id');
+        return $this->hasMany(Kabupaten::class, 'provinsi_id');
     }
 }

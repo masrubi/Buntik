@@ -60,7 +60,7 @@
                                                 <strong>Penerima / Lokasi Pengiriman:</strong><br>
                                                 {{ Str::title($pesanan->nama_penerima) }}<br>
                                                 {{ Str::title($pesanan->alamat) }}<br>
-                                                Kab / Kota : {{ $pesanan->nama_kota }}<br>
+                                                Kab / Kabupaten : {{ $pesanan->nama_kabupaten }}<br>
                                                 Prov : {{ $pesanan->nama_prov }} <br>
                                                 [Telp : {{ $pesanan->no_telp }}]
                                             </address>

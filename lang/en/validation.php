@@ -231,8 +231,8 @@ return [
             'required'=>'Wajib Memilih Provinsi Penerima',
         ],
 
-        'kota'=>[
-            'required'=>'Wajib Memilih kota Penerima',
+        'kabupaten'=>[
+            'required'=>'Wajib Memilih kabupaten Penerima',
         ],
 
         'alamat'=>[

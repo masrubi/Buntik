@@ -68,7 +68,7 @@
                                             <tr>
                                                 <td>#P00{{ $transaksi->id_pesanan }}</td>
                                                 <td>{{ Str::Title($transaksi->nama_produk) }}</td>
-                                                <td>{{ $transaksi->nama_kota . ' - ' . $transaksi->nama_prov }}</td>
+                                                <td>{{ $transaksi->nama_kabupaten . ' - ' . $transaksi->nama_prov }}</td>
                                                 <td>{{ $transaksi->quantity }} Pcs</td>
                                                 <td>
                                                     @php

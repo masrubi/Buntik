@@ -27,7 +27,7 @@
                 <th>Produk</th>
                 <th>Quantity</th>
                 <th>Total Bayar</th>
-                <th>Kota Pengiriman</th>
+                <th>Kabupaten Pengiriman</th>
                 <th>Tanggal Transaksi</th>
             </tr>
         </thead>
@@ -38,7 +38,7 @@
                     <td>{{ $trx->nama_produk }}</td>
                     <td>{{ $trx->quantity }}</td>
                     <td>Rp {{ number_format($trx->bayar, 2, ',', '.') }}</td>
-                    <td>{{ $trx->nama_kota }}, {{ $trx->nama_prov }}</td>
+                    <td>{{ $trx->nama_kabupaten }}, {{ $trx->nama_prov }}</td>
                     <td>{{ $trx->updated_at->format('d-m-Y') }}</td>
                 </tr>
             @empty

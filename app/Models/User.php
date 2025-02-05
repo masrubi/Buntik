@@ -43,4 +43,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'id_user');
+    }
+    public function pesananSebagaiAnggota()
+    {
+        return $this->hasMany(Pesanan::class, 'id_user');
+    }
+
+    public function pelanggan()
+    {
+        return $this->hasManyThrough(
+            User::class,        // Tabel target (users untuk customer)
+            Pesanan::class,     // Tabel perantara (pesanan)
+            'id_user',          // Foreign key pada tabel pesanan yang merujuk ke anggota
+            'id',               // Foreign key pada tabel users untuk customer
+            'id',               // Local key pada tabel anggota
+            'id_customer'       // Local key pada tabel pesanan untuk customer
+        );
+    }
 }

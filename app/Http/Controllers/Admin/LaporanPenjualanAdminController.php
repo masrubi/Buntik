@@ -12,7 +12,7 @@ class LaporanPenjualanAdminController extends Controller
     {
         $transaksi = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
         ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-        ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+        ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten')
         /*->where('pesanan.status', 'selesai')
         ->orWhere('pesanan.status', 'Barang Dalam Pengiriman')*/
         ->where(function ($query) {
@@ -44,7 +44,7 @@ class LaporanPenjualanAdminController extends Controller
 {
     $transaksi = Pesanan::join('produk', 'produk.id_produk', '=', 'pesanan.id_produk')
         ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-        ->select('pesanan.*', 'produk.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+        ->select('pesanan.*', 'produk.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten')
         ->where('pesanan.status', 'selesai')
         ->orWhere('pesanan.status', 'Barang Dalam Pengiriman')
         ->orderBy('pesanan.updated_at', 'desc')
@@ -61,7 +61,7 @@ public function cetakLaporan(Request $request)
 
     $query = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
         ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-        ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+        ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten')
         ->where('pesanan.status', 'selesai')
         ->orWhere('pesanan.status', 'Barang Dalam Pengiriman');
 

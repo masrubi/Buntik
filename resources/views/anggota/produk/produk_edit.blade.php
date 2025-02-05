@@ -26,7 +26,7 @@
                             <p class="card-title-desc">Perhatikan penulisan setiap produk agar dapat membuat konsumen nyaman
                                 bertransaksi</p>
 
-                            <form action="{{ route('produk.update', $produk->id_produk) }}" method="post"
+                            <form action="{{ route('anggota.produk.update', $produk->id_produk) }}" method="post"
                                 enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
@@ -124,40 +124,13 @@
                                     <label for="validationCustom01" class="form-label">Daftar Harga Produk</label>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 6 - 11 pcs</label>
+                                            <label for="validationCustom01" class="form-label">Harga per ons</label>
                                             <input id="input-currency" class="form-control input-mask text-left"
                                                 name="harga_produk1"
                                                 data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'"
-                                                value="{{ $produk->harga_produk1 }}">
+                                                value="{{ $produk->harga_produk }}">
                                         </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 12 - 23 pcs</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk2"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'"
-                                                value="{{ $produk->harga_produk2 }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 24 - 50 pcs</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk3"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'"
-                                                value="{{ $produk->harga_produk3 }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 51 - 100 pcs</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk4"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'"
-                                                value="{{ $produk->harga_produk4 }}">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 101 - 200 pcs</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk5"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'"
-                                                value="{{ $produk->harga_produk5 }}">
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="mb-3">

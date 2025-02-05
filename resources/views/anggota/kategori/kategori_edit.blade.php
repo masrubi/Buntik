@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <h4 class="header-title">Perbaharui Kategori</h4>
                             <p class="card-title-desc"><code>Perhatikan Tulisan Dengan Baik dan Benar</code></p>
-                            <form action="{{ Route ('kategori.update', $update->id_kategori) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ Route ('anggota.kategori.update', $update->id_kategori) }}" method="post" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="mb-3">
@@ -62,7 +62,7 @@
                                             <tr>
                                                 <td><b>{{ Str::upper($hasil->jenis_kategori) }}</b></td>
                                                 <td align="center">
-                                                    <form action="{{route('kategori.destroy',$hasil->id_kategori)}}" method="POST" style="display:inline" onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
+                                                    <form action="{{route('anggota.kategori.destroy',$hasil->id_kategori)}}" method="POST" style="display:inline" onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
                                                         @method('delete')
                                                         @csrf
                                                     <button type="submit" class="btn btn-danger waves-effect waves-light"><i class="dripicons-trash"></i> Delete</button>

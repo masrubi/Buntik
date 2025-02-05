@@ -12,7 +12,7 @@ class Desa extends Model
 
     // Tentukan kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'name', // Nama desa
+        'nama', // Nama desa
         'kecamatan_id', // ID kecamatan yang menjadi foreign key
     ];
 

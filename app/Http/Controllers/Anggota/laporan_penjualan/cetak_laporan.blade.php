@@ -68,7 +68,7 @@
                                                         <td>{{ $item->quantity }}</td>
                                                         <td>Rp {{ number_format($item->bayar, 2, ',', '.') }}</td>
                                                         <td>{{ ucfirst($item->status) }}</td>
-                                                        <td>{{ $item->nama_kota }}, {{ $item->nama_prov }}</td>
+                                                        <td>{{ $item->nama_kabupaten }}, {{ $item->nama_prov }}</td>
                                                     </tr>
                                                 @endforeach
                                                 @if ($transaksi->isEmpty())

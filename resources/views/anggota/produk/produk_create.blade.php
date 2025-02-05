@@ -26,7 +26,7 @@
                             <p class="card-title-desc">Perhatikan penulisan setiap produk agar dapat membuat konsumen nyaman
                                 bertransaksi</p>
 
-                            <form action="{{ route('produk.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('anggota.produk.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label">Nama Produk</label>
@@ -99,35 +99,12 @@
                                     <label for="validationCustom01" class="form-label">Daftar Harga Produk</label>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 1 - 10 ons</label>
+                                            <label for="validationCustom01" class="form-label">Harga per ons</label>
                                             <input id="input-currency" class="form-control input-mask text-left"
                                                 name="harga_produk1"
                                                 data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'">
                                         </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 11 - 20 ons</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk2"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 21 - 50 ons</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk3"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 51 - 100 ons</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk4"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="validationCustom01" class="form-label">Harga 101 - 200 ons</label>
-                                            <input id="input-currency" class="form-control input-mask text-left"
-                                                name="harga_produk5"
-                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': 'Rp. ', 'placeholder': '0'">
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="mb-3">

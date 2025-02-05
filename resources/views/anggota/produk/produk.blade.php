@@ -7,14 +7,13 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title">
-                        <h4>Produk</h4>
+                        <h4>Produk Tani</h4>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- end page title -->
-
 
     <div class="container-fluid">
         <div class="page-content-wrapper">
@@ -32,44 +31,44 @@
                                     {{ session('delete') }}
                                 </div>
                             @endif
-                            <a href="{{ route('produk.create') }}" class="btn btn-primary"><i
-                                    class="mdi mdi-store-plus"></i> Tambah Produk Baru</a>
+                            <a href="{{ route('anggota.produk.create') }}" class="btn btn-primary"><i class="mdi mdi-store-plus"></i> Tambah Produk Baru</a>
                             <div class="mt-3">
-                                <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>Nama Produk</th>
-                                            <th>Kategori Produk</th>
+                                            <th>Kategori</th>
+                                            <th>Kelompok Pengelola</th>
+                                            <th>Stok (kg)</th>
                                             <th>Foto Produk</th>
                                             <th>Tanggal Upload</th>
                                             <th>
-                                                <center>Action</center>
+                                                <center>Aksi</center>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($produk as $data)
                                             <tr>
-                                                <td><b>{{ Str::upper($data->nama_produk) }}</b></td>
-                                                <td><i>{{ Str::upper($data->jenis_kategori) }}</i></td>
+                                                <td><b>{{ $data->nama_produk }}</b></td>
+                                                <td><i>{{ $data->jenis_kategori }}</i></td>
+                                                <td><i>{{ $data->nama_kelompok ?? 'Tidak Ada' }}</i></td>
+                                                <td><i>{{ $data->stok_produk }}</i> Kg</td>
                                                 <td align="center">
-                                                    <img src="/produk/{{ $data->foto_produk1 }}" alt=""
-                                                        height="30px" width="30px">
+                                                    <img src="/produk/{{ $data->foto_produk1 }}" alt="Foto Produk" height="50px" width="50px">
                                                 </td>
-                                                <td>{{ $data->created_at }}</td>
+                                                <td>{{ $data->created_at ? $data->created_at->format('d M Y') : '-' }}</td>
+
                                                 <td align="center">
-                                                    <a href="{{ route('produk.edit', $data->id_produk) }}"
-                                                        class="btn btn-warning waves-effect waves-light"><i
-                                                            class="dripicons-pencil"></i> Edit</a>
-                                                    <form action="{{ route('produk.destroy', $data->id_produk) }}"
-                                                        method="POST" style="display:inline"
-                                                        onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
+                                                    <a href="{{ route('anggota.produk.edit', $data->id_produk) }}" class="btn btn-warning btn-sm">
+                                                        <i class="dripicons-pencil"></i> Edit
+                                                    </a>
+                                                    <form action="{{ route('anggota.produk.destroy', $data->id_produk) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Yakin akan Menghapus Produk Ini?');">
                                                         @method('delete')
                                                         @csrf
-                                                        <button type="submit"
-                                                            class="btn btn-danger waves-effect waves-light"><i
-                                                                class="dripicons-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="dripicons-trash"></i> Hapus
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -86,14 +85,11 @@
 @endsection
 
 @section('css')
-    <link href="/morvin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="/morvin/dist/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
-        type="text/css" />
+    <link href="/morvin/dist/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="/morvin/dist/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Responsive datatable examples -->
-    <link href="/morvin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-        type="text/css" />
+    <link href="/morvin/dist/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('js')

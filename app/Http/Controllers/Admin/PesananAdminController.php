@@ -13,7 +13,7 @@ class PesananAdminController extends Controller
     {
      $konfirmasi = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
      ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-     ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+     ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten')
      ->Where('pesanan.status','Bukti Pembayaraan Sedang Di Tinjau')
      ->Where('pesanan.tipe_pembayaran', 'lunas')
      ->orderBy('pesanan.updated_at', 'desc')
@@ -22,7 +22,7 @@ class PesananAdminController extends Controller
     $ongoing = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
     ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
     ->join('users', 'users.id', '=', 'pesanan.id_user')
-    ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota', 'users.nama')
+    ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten', 'users.nama')
     ->Where('pesanan.status','Pesanan Di Terima')
     ->Where('pesanan.tipe_pembayaran', 'lunas')
     ->orderBy('pesanan.id_pesanan', 'desc')
@@ -31,14 +31,14 @@ class PesananAdminController extends Controller
     $kirim = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
     ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
     ->join('users', 'users.id', '=', 'pesanan.id_user')
-    ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota', 'users.nama')
+    ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten', 'users.nama')
     ->Where('pesanan.status','Barang Dalam Pengiriman')
     ->orderBy('pesanan.id_pesanan', 'desc')
     ->get();
 
     $konfirmasi_dp = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
     ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-    ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+    ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten')
     ->Where('pesanan.status','Bukti Pembayaraan Sedang Di Tinjau')
     ->Where('pesanan.tipe_pembayaran', 'dp')
     ->orderBy('pesanan.updated_at', 'desc')
@@ -47,7 +47,7 @@ class PesananAdminController extends Controller
     $ongoing_dp = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
     ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
     ->join('users', 'users.id', '=', 'pesanan.id_user')
-    ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota', 'users.nama')
+    ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten', 'users.nama')
     ->Where('pesanan.status','Pesanan Di Terima')
     ->Where('pesanan.tipe_pembayaran', 'dp')
     ->orderBy('pesanan.id_pesanan', 'desc')
@@ -77,7 +77,7 @@ class PesananAdminController extends Controller
         $pesanan = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
         ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
         ->join('users', 'users.id', '=', 'pesanan.id_user')
-        ->select('pesanan.*', 'produk_tani.*', 'user_alamat.no_telp','user_alamat.alamat','user_alamat.nama_penerima', 'user_alamat.nama_prov', 'user_alamat.nama_kota', 'users.*')
+        ->select('pesanan.*', 'produk_tani.*', 'user_alamat.no_telp','user_alamat.alamat','user_alamat.nama_penerima', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten', 'users.*')
         ->find($id);
 
         return view('admin.pesanan.pesanan_cetak', compact(['pesanan']));

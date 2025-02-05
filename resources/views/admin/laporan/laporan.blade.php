@@ -50,7 +50,7 @@
                                     <td><b>{{ Str::title($laporan->semai) }}</b></td> --}}
                                     <td>
                                         @php
-                                            echo rupiah($laporan->ongkir).' [ '. $laporan->nama_kota.' / '.$laporan->nama_prov.' ] '
+                                            echo rupiah($laporan->ongkir).' [ '. $laporan->nama_kabupaten.' / '.$laporan->nama_prov.' ] '
                                         @endphp
                                     </td>
                                     <td>

@@ -30,7 +30,7 @@
                             @endif
                             <h4 class="header-title">Buat Pesanan Semai</h4>
                             <p class="card-title-desc"><code>Perhatikan Tulisan Dengan Baik dan Benar</code></p>
-                            <form action="{{ Route('semai.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ Route('anggotata.semai.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
                                     <input
@@ -100,10 +100,10 @@
 
                                                     {{-- {{ echo rupiah($list->harga_semai) }}</td> --}}
                                                 <td align="center">
-                                                    <a href="{{ route('semai.edit', $list->id_semai) }}"
+                                                    <a href="{{ route('anggota.semai.edit', $list->id_semai) }}"
                                                         class="btn btn-warning waves-effect waves-light"><i
                                                             class="dripicons-pencil"></i> Edit</a>
-                                                    <form action="{{ route('semai.destroy', $list->id_semai) }}" method="POST"
+                                                    <form action="{{ route('anggota.semai.destroy', $list->id_semai) }}" method="POST"
                                                         style="display:inline"
                                                         onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
                                                         @method('delete')

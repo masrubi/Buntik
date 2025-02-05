@@ -1,53 +1,56 @@
-@extends('layouts.app')
+@extends('anggota.layouts.master')
 
 @section('content')
-<div class="container mt-4">
-    <h1>Tambah Kelompok Tani</h1>
-
-    <form action="{{ route('kelompok_tani.store') }}" method="POST">
-        @csrf
-        <div class="card">
-            <div class="card-header">
-                <h5>Form Data Kelompok Tani</h5>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="nama_kelompok" class="form-label">Nama Kelompok</label>
-                    <input type="text" name="nama_kelompok" class="form-control" id="nama_kelompok" placeholder="Masukkan nama kelompok" required>
+    <!-- start page title -->
+    <div class="page-title-box">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h4>Tambah Kelompok Tani</h4>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="lokasi" class="form-label">Lokasi</label>
-                    <input type="text" name="lokasi" class="form-control" id="lokasi" placeholder="Masukkan lokasi" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="modal_gedung" class="form-label">Modal Gedung</label>
-                    <input type="number" name="modal_gedung" class="form-control" id="modal_gedung" placeholder="Masukkan modal gedung" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="modal_pupuk" class="form-label">Modal Awal Pupuk</label>
-                    <input type="number" name="modal_pupuk" class="form-control" id="modal_pupuk" placeholder="Masukkan modal awal pupuk" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="modal_bibit" class="form-label">Modal Awal Bibit</label>
-                    <input type="number" name="modal_bibit" class="form-control" id="modal_bibit" placeholder="Masukkan modal awal bibit" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="modal_alat_operasional" class="form-label">Modal Operasional</label>
-                    <input type="number" name="modal_alat_operasional" class="form-control" id="modal_alat_operasional" placeholder="Masukkan modal operasional" required>
-                </div>
-            </div>
-
-            <div class="card-footer text-right">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-<a href="{{ route('kelompok_tani.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
-
             </div>
         </div>
-    </form>
-</div>
+    </div>
+    <!-- end page title -->
+
+
+    <div class="container-fluid">
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Form Tambah Kelompok Tani</h4>
+                            <p class="card-title-desc">Perhatikan penulisan setiap kelompok tani agar data dapat disimpan dengan benar.</p>
+
+                            <form action="{{ route('anggota.kelompok_tani.store') }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="nama_kelompok" class="form-label">Nama Kelompok Tani</label>
+                                    <input class="form-control @error('nama_kelompok') is-invalid @enderror" name="nama_kelompok" type="text" placeholder="Kelompok Tani ABC" id="nama_kelompok">
+                                    @error('nama_kelompok')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="lokasi" class="form-label">Lokasi</label>
+                                    <input class="form-control @error('lokasi') is-invalid @enderror" name="lokasi" type="text" placeholder="Lokasi Kelompok Tani" id="lokasi">
+                                    @error('lokasi')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-success w-100"><i class="mdi mdi-content-save"></i> Simpan Kelompok Tani</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- container-fluid -->
 @endsection

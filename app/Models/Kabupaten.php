@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kota extends Model
+class Kabupaten extends Model
 {
     use HasFactory;
-    protected $table = 'kota';
+    protected $table = 'kabupaten';
 
     // Tentukan kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'name', // Nama desa
+        'nama', // Nama desa
         'provinsi_id', // ID kecamatan yang menjadi foreign key
     ];
 
@@ -26,6 +26,6 @@ class Kota extends Model
 
     public function kecamatan()
     {
-        return $this->hasMany(Kecamatan::class, 'kota_id');
+        return $this->hasMany(Kecamatan::class, 'kabupaten_id');
     }
 }

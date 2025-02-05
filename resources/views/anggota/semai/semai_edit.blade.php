@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <h4 class="header-title">Perbaharui Semai</h4>
                             <p class="card-title-desc"><code>Perhatikan Tulisan Dengan Baik dan Benar</code></p>
-                            <form action="{{ Route ('semai.update', $update->id_semai) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ Route ('anggota.semai.update', $update->id_semai) }}" method="post" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="mb-3">
@@ -81,7 +81,7 @@
                                             return $hasil_rupiah;
                                         }
                                         @endphp
-                                        @foreach ($semai as $data => $list)
+                                        @foreach ($Semai as $data => $list)
                                             <tr>
                                                 <td>{{ $list->jenis_semai }}</td>
                                                 <td>
@@ -91,7 +91,7 @@
 
                                                     {{-- {{ echo rupiah($list->harga_semai) }}</td> --}}
                                                 <td align="center">
-                                                    <form action="{{ route('semai.destroy', $list->id_semai) }}" method="POST"
+                                                    <form action="{{ route('anggota.semai.destroy', $list->id_semai) }}" method="POST"
                                                         style="display:inline"
                                                         onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
                                                         @method('delete')

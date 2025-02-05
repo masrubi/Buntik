@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <h4 class="header-title">Perbaharui Variasi</h4>
                             <p class="card-title-desc"><code>Perhatikan Tulisan Dengan Baik dan Benar</code></p>
-                            <form action="{{ Route ('variasi.update', $update->id_variasi) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ Route ('anggota.variasi.update', $update->id_variasi) }}" method="post" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="mb-3">
@@ -91,7 +91,7 @@
 
                                                     {{-- {{ echo rupiah($list->harga_variasi) }}</td> --}}
                                                 <td align="center">
-                                                    <form action="{{ route('variasi.destroy', $list->id_variasi) }}" method="POST"
+                                                    <form action="{{ route('anggota.variasi.destroy', $list->id_variasi) }}" method="POST"
                                                         style="display:inline"
                                                         onsubmit="return confirm('Apakah Yakin akan Di Hapus ?');">
                                                         @method('delete')

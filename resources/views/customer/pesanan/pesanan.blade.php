@@ -57,7 +57,7 @@
                         <div class="card-body">
                             <div class="alert alert-warning" role="alert">
                                 <b>Note : </b>
-                                <p>Untuk Lama Proses Pembuatan Pakaian Kurang Lebih Membutuhkan Waktu Satu Minggu (7 Hari)
+                                <p>Untuk Panen Petik biasanya di buka hari Sabtu dan Minggu (2 Hari)
                                 </p>
                             </div>
                             <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
@@ -259,7 +259,7 @@
                                                                         </dd>
                                                                         <dt class="col-sm-4">Ongkir </dt>
                                                                         <dd class="col-sm-8">@php
-                                                                            echo rupiah($ongoing->ongkir) . ' [ ' . $ongoing->nama_kota . ' ]';
+                                                                            echo rupiah($ongoing->ongkir) . ' [ ' . $ongoing->nama_kabupaten . ' ]';
                                                                         @endphp</dd>
                                                                         <dt class="col-sm-4">Total</dt>
                                                                         <dd class="col-sm-8">

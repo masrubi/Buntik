@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlamatCustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+    
 
+});
+Route::prefix('api')->middleware('api')->group(function () {
+    Route::get('/kabupaten/{provinsiId}', [AlamatCustomerController::class, 'getKabupaten']);
+    Route::get('/kecamatan/{kabupatenId}', [AlamatCustomerController::class, 'getKecamatan']);
+    Route::get('/desa/{kecamatanId}', [AlamatCustomerController::class, 'getDesa']);
+});
 
      
 

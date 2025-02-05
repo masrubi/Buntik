@@ -77,7 +77,7 @@
                         @if ($notif_chat->count() > 0)
                             <span class="badge rounded-pill bg-danger float-end">{{ $notif_chat->count() }}</span>
                         @endif
-                        <span> Chat Admin</span>
+                        <span> Chat Anggota</span>
                     </a>
                 </li>
                 {{-- <li>

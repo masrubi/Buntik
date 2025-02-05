@@ -30,12 +30,23 @@ use App\Http\Controllers\Customer\PesananDPCustomerController;
 use App\Http\Controllers\Customer\ProfileCustomerController;
 use App\Http\Controllers\Customer\RiwayatPesananController;
 
-use App\Http\Controllers\Anggota\AnggotaDashboardController; // Anggota Dashboard
-use App\Http\Controllers\Anggota\PesananAnggotaController;  // Anggota Pesanan
-use App\Http\Controllers\Anggota\ChatAnggotaController; // Anggota Chat
-use App\Http\Controllers\Anggota\ProfileAnggotaController; // Anggota Profile
-use App\Http\Controllers\Anggota\LaporanPenjualanAnggotaController; // Anggota Laporan Penjualan
-use App\Http\Controllers\Anggota\RekeningAnggotaController; // Anggota Rekening
+use App\Http\Controllers\Anggota\ChatAnggotaController;
+use App\Http\Controllers\Anggota\AlamatAnggotaController;
+use App\Http\Controllers\Anggota\AnggotaHasilPanenController;
+use App\Http\Controllers\Anggota\AnggotaPengelolaanTanamanController;
+use App\Http\Controllers\Anggota\LaporanPenjualanAnggotaController;
+use App\Http\Controllers\Anggota\PesananAnggotaController;
+use App\Http\Controllers\Anggota\ProfileAnggotaController;
+use App\Http\Controllers\Anggota\RekeningAnggotaController;
+use App\Http\Controllers\Anggota\AnggotaDashboardController;
+use App\Http\Controllers\Anggota\AnggotaAplikasiSemaiController;
+use App\Http\Controllers\Anggota\AnggotaKategoriProdukController;
+use App\Http\Controllers\Anggota\AnggotaKelompokTaniController;
+use App\Http\Controllers\Anggota\AnggotaTanamanController;
+use App\Http\Controllers\Anggota\AnggotaProdukController;
+use App\Http\Controllers\Anggota\AnggotaProduknonController;
+use App\Http\Controllers\Anggota\AnggotaVariasiProdukController;
+use App\Http\Controllers\Anggota\AnggotaKasirController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -136,7 +147,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     
 });
 
-Route::middleware(['auth', 'user-access:anggota'])->group(function () {
+Route::middleware(['auth', 'user-access:anggota', 'check-profile-completion'])->group(function () {
 
     Route::get('/anggota/dashboard', [AnggotaDashboardController::class, 'index'])->name('anggota.dashboard');
     Route::post('/anggota/dashboard', [AnggotaDashboardController::class, 'laporan'])->name('anggota.laporan');
@@ -144,6 +155,14 @@ Route::middleware(['auth', 'user-access:anggota'])->group(function () {
     Route::resource('/anggota/produk_non', ProduknonController::class, ['as' => 'anggota']);
 
     Route::resource('/anggota/produk', ProdukController::class, ['as' => 'anggota']);
+
+    Route::resource('/anggota/kelompok_tani', AnggotaKelompokTaniController::class, ['as' => 'anggota']);
+
+    Route::resource('/anggota/tanaman', AnggotaTanamanController::class, ['as' => 'anggota']);
+
+    Route::resource('/anggota/pengelolaan_tanaman', AnggotaPengelolaanTanamanController::class, ['as' => 'anggota']);
+
+    Route::resource('/anggota/hasil_panen', AnggotaHasilPanenController::class, ['as' => 'anggota']);
 
     Route::resource('/anggota/kategori', KategoriProdukController::class, ['as' => 'anggota']);
 
@@ -177,9 +196,21 @@ Route::middleware(['auth', 'user-access:anggota'])->group(function () {
     Route::post('/anggota/profile/store', [ProfileAnggotaController::class, 'store'])->name('anggota.profile_store');
     Route::put('/anggota/profile/update/{profile}', [ProfileAnggotaController::class, 'update_profile'])->name('anggota.profile_update');
 
+    Route::get('/anggota/alamat/alamat_anggota/{alamat}', [AlamatAnggotaController::class, 'create_alamat_anggota'])->name('anggota.alamat_anggota');
+    Route::post('/anggota/alamat/alamat_anggota/store', [AlamatAnggotaController::class, 'store_alamat_anggota'])->name('anggota.alamat_anggotat_store');
+    
     Route::get('/anggota/laporan/penjualan', [LaporanPenjualanAnggotaController::class, 'laporan_penjualan'])->name('anggota.laporan_penjualan');
     Route::get('/anggota/laporan/cetak', [LaporanPenjualanAnggotaController::class, 'cetakLaporan'])->name('anggota.laporan.cetak');
     
+    Route::get('anggota/kasir', [AnggotaKasirController::class, 'index'])->name('anggota.kasir.index');
+    Route::post('anggota/kasir/add-to-cart/{id}', [AnggotaKasirController::class, 'addToCart'])->name('anggota.kasir.addToCart');
+    Route::get('anggota/kasir/cart', [AnggotaKasirController::class, 'cart'])->name('anggota.kasir.cart');
+    Route::post('anggota/kasir/checkout', [AnggotaKasirController::class, 'checkout'])->name('anggota.kasir.checkout');
+    Route::get('anggota/kasir/history', [AnggotaKasirController::class, 'history'])->name('anggota.kasir.history');
+    
+   
+    
+
     
 });
 
@@ -215,8 +246,8 @@ Route::middleware(['auth', 'user-access:pembeli'])->group(function () {
 
     
 
-    Route::get('/get-kota/{provinsiId}', [AlamatCustomerController::class, 'getKota'])->name('customer.kota');
-    Route::get('/get-kecamatan/{kotaId}', [AlamatCustomerController::class, 'getKecamatan'])->name('customer.kecamatan');
+    Route::get('/get-kabupaten/{provinsiId}', [AlamatCustomerController::class, 'getKabupaten'])->name('customer.kabupaten');
+    Route::get('/get-kecamatan/{kabupatenId}', [AlamatCustomerController::class, 'getKecamatan'])->name('customer.kecamatan');
     Route::get('/get-desa/{kecamatanId}', [AlamatCustomerController::class, 'getDesa'])->name('customer.desa');
     
 

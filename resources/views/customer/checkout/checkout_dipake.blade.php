@@ -75,13 +75,13 @@
                                                     <div class="mb-3">
                                                         <input class="form-check-input float-end" type="radio"
                                                             name="alamat_kirim"
-                                                            value="{{ $alamat->id_kota . '|' . $alamat->id_user_alamat }}"
+                                                            value="{{ $alamat->id_kabupaten . '|' . $alamat->id_user_alamat }}"
                                                             id="formRadios2">Pilih Alamat
                                                     </div>
                                                     {{-- <a href="#" class="float-end ms-1">Edit</a> --}}
                                                     <h5 class="font-size-14">{{ Str::title($alamat->nama_penerima) }}</h5>
                                                     <p class="mb-1">
-                                                        {{ $alamat->alamat . ', ' . $alamat->nama_kota . ' [' . $alamat->nama_prov . ']' }}
+                                                        {{ $alamat->alamat . ', ' . $alamat->nama_kabupaten . ' [' . $alamat->nama_prov . ']' }}
                                                     </p>
                                                     <p class="mb-0">Tlp. {{ $alamat->no_telp }}</p>
                                                 </div>

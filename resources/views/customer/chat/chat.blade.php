@@ -6,10 +6,10 @@
             <div class="row align-items-center">
                 <div class="col-sm-6">
                     <div class="page-title">
-                        <h4>Chat Admin</h4>
+                        <h4>Chat Anggota</h4>
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Chat Admin</li>
+                            <li class="breadcrumb-item active">Chat Anggota</li>
                         </ol>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                                                 </div>
 
                                                 <div class="media-body overflow-hidden">
-                                                    <h5 class="text-truncate font-size-14 mb-1">Admin
+                                                    <h5 class="text-truncate font-size-14 mb-1">Anggota
                                                         <li>   {{ session('kelompokTani', '') }} </li>
                                                     </h5>
                                                     <p>Jam Kerja 08.00 - 16.00 WIB</p>
@@ -64,7 +64,7 @@
                         <div class="p-4 border-bottom ">
                             <div class="row">
                                 <div class="col-md-4 col-9">
-                                    <h5 class="font-size-15 mb-1 text-truncate">Admin 
+                                    <h5 class="font-size-15 mb-1 text-truncate">Anggota 
                                      <li>   {{ session('kelompokTani', '') }} </li>
                                     </h5>
                                 </div>

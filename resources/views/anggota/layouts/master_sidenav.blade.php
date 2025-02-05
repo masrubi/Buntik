@@ -37,6 +37,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ Route('anggota.kasir.index') }}" class="waves-effect">
+                        <i class="dripicons-home"></i>
+                        <span>Kasir</span>
+                    </a>
+                </li>
+
                 <li class="{{ request()->is('anggota/pesanan/*') ? 'mm-active' : ''}}">
                     <a href="{{ route('pesananAnggota.index') }}" class="waves-effect">
                         <i class="mdi mdi-cart-arrow-up"></i>
@@ -65,6 +72,35 @@
                         <span class="badge rounded-pill bg-danger float-end">{{ $notif_chat->count() }}</span>
                         @endif
                         <span> Chatting</span>
+                    </a>
+                </li>
+                <li class="menu-title">KELOLA TANAMAN</li>
+
+                {{-- <li class="{{ request()->is('anggota/produk_non/*') ? 'mm-active' : ''}}">
+                    <a href="{{ route('produk_non.index') }}" class="waves-effect">
+                        <i class="mdi mdi-storefront"></i>
+                        <span>Produk Non Grosir</span>
+                    </a>
+                </li> --}}
+
+                <li class="{{ request()->is('anggota/tanaman/*') ? 'mm-active' : ''}}">
+                    <a href="{{ route('anggota.tanaman.index') }}" class="waves-effect">
+                        <i class="mdi mdi-leaf"></i>
+                        <span>Tanaman</span>
+                    </a>
+                </li>
+
+                <li class="{{ request()->is('anggota/pengelolaan_tanaman/*') ? 'mm-active' : ''}}">
+                    <a href="{{ route('anggota.pengelolaan_tanaman.index') }}" class="waves-effect">
+                        <i class="mdi mdi-leaf"></i>
+                        <span>Pengelolaan Tanaman</span>
+                    </a>
+                </li>
+
+                <li class="{{ request()->is('anggota/hasil_panen/*') ? 'mm-active' : ''}}">
+                    <a href="{{ route('anggota.hasil_panen.index') }}" class="waves-effect">
+                        <i class="dripicons-store"></i>
+                        <span>Hasil Panen</span>
                     </a>
                 </li>
 

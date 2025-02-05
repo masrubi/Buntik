@@ -19,11 +19,13 @@
 
     <div class="container-fluid">
         @php
-            function rupiah($angka)
-            {
-                $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
-                return $hasil_rupiah;
-            }
+            if (!function_exists('rupiah')) {
+    function rupiah($angka)
+    {
+        return 'Rp ' . number_format($angka, 0, ',', '.');
+    }
+}
+
         @endphp
 
         <div class="page-content-wrapper">
@@ -47,29 +49,42 @@
                             <hr>
                             <p class="card-title-desc">Metode Pengiriman Produk</p>
                             <div class="row">
-                                @foreach ($ongkir as $ongkir)
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="card border rounded shipping-address">
-                                            <div class="card-body">
-                                                <img src="/buntik/jne.jpeg" width="60" height="60">
-                                                <div class="mb-1">
-                                                    <input class="form-check-input float-end" type="radio"
-                                                        name="alamat_kirim" value="" id="formRadios2"
-                                                        checked>{{ $ongkir['name'] }}
-                                                </div>
-                                                <p class="mb-1">Jenis Layanan :
-                                                    <b>{{ $ongkir['costs'][1]['description'] }}</b>
-                                                </p>
-                                            </div>
+                                @if ($ongkir === 0)
+                                    <div class="col-12">
+                                        <div class="alert alert-info" role="alert">
+                                            Ongkir gratis!
                                         </div>
                                     </div>
-                                @endforeach
+                                    @php
+                                        $harga_ongkir = 0; // Tetapkan nilai ongkir ke 0
+                                    @endphp
+                                @else
+                                    @foreach ($ongkir as $ongkirItem)
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="card border rounded shipping-address">
+                                                <div class="card-body">
+                                                    <img src="/buntik/jne.jpeg" width="60" height="60">
+                                                    <div class="mb-1">
+                                                        <input class="form-check-input float-end" type="radio" name="alamat_kirim" 
+                                                               value="{{ $ongkirItem['name'] }}" id="formRadios2" checked>
+                                                        {{ $ongkirItem['name'] }}
+                                                    </div>
+                                                    <p class="mb-1">Jenis Layanan:
+                                                        <b>{{ $ongkirItem['costs'][1]['description'] ?? 'Tidak tersedia' }}</b>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            
                                 <div class="col-lg-8 col-sm-6">
                                     <div class="card border rounded shipping-address">
                                         <div class="card-body">
                                             <h4 class="card-title font-size-16 mt-0">Lokasi Pengiriman : </h4>
                                             <p class="card-text">
-                                                {{ Str::title($pesanan->alamat . ', ' . $pesanan->nama_kota . ' [ ' . $pesanan->nama_prov . ']') }}
+                                                {{ Str::title($pesanan->alamat . ', '. $pesanan->nama_desa . ', ' . $pesanan->nama_kecamatan . ', ' . $pesanan->nama_kabupaten . ' [ ' . $pesanan->nama_prov . ']') }}
                                             </p>
                                             <p class="card-text"><b>Penerima Produk</b></p>
                                             <p class="card-text">Nama Penerima :
@@ -98,44 +113,24 @@
                                                 <p class="font-size-14 mb-0 text-muted">Jumlah Pesanan :
                                                     {{ $pesanan->quantity }}</p>
                                                 <p class="font-size-14 mb-0 text-muted">Berat :
-                                                    {{ $pesanan->quantity * 145 }} Gram</p>
+                                                    {{ $pesanan->quantity * 1 }} ons</p>
                                             </td>
-                                            <td>
-                                                @if ($pesanan->quantity <= 11)
-                                                    @php
-                                                        $quantity = $pesanan->quantity;
-                                                        $harga = $pesanan->harga_produk1;
-                                                        echo rupiah($harga) . ' [6-11 pcs]';
-                                                    @endphp
-                                                @elseif ($pesanan->quantity <= 23)
-                                                    @php
-                                                        $quantity = $pesanan->quantity;
-                                                        $harga = $pesanan->harga_produk2;
-                                                        echo rupiah($harga) . ' [12-23 pcs]';
-                                                    @endphp
-                                                @elseif ($pesanan->quantity <= 50)
-                                                    @php
-                                                        $quantity = $pesanan->quantity;
-                                                        $harga = $pesanan->harga_produk3;
-                                                        echo rupiah($harga) . ' [24-50 pcs]';
-                                                    @endphp
-                                                @elseif ($pesanan->quantity <= 100)
-                                                    @php
-                                                        $quantity = $pesanan->quantity;
-                                                        $harga = $pesanan->harga_produk4;
-                                                        echo rupiah($harga) . ' [51-100 pcs]';
-                                                    @endphp
-                                                @elseif ($pesanan->quantity <= 200)
-                                                    @php
-                                                        $quantity = $pesanan->quantity;
-                                                        $harga = $pesanan->harga_produk5;
-                                                        echo rupiah($harga) . ' [101-200 pcs]';
-                                                    @endphp
-                                                @endif
+                                            <td>                                          
+                                                                                                 
+                                               
+                                               
+                                                     @php
+                                                         $quantity = $pesanan->quantity;
+                                                         $harga = $pesanan->harga_produk;
+                                                         echo rupiah($harga) . ' /ons';
+                                                     @endphp
+                                               
+                                                
                                             </td>
                                             <td>
                                                 @php
-                                                    echo rupiah($pesanan->bayar);
+                                                $bayar = $pesanan->bayar;
+                                                    echo rupiah($bayar);
                                                 @endphp
                                             </td>
                                         </tr>
@@ -149,7 +144,8 @@
                                                 </td>
                                                 <td>
                                                     @php
-                                                        echo rupiah($pesanan->variasi_total);
+                                                    $variasi_total = $pesanan->variasi_total;
+                                                        echo rupiah($variasi_total);
                                                     @endphp
                                                 </td>
                                             </tr>
@@ -162,7 +158,8 @@
                                                 <td> Rp. {{ $pesanan->semai_harga }}</td>
                                                 <td>
                                                     @php
-                                                        echo rupiah($pesanan->semai_total);
+                                                    $semai_total = $pesanan->semai_total;
+                                                        echo rupiah($semai_total);
                                                     @endphp
                                                 </td>
                                             </tr>
@@ -170,13 +167,14 @@
                                         <tr>
                                             <td colspan="1"></td>
                                             <td>
-                                                <b>Biaya Pengiriman : [Jne-Reg]</b>
+                                                <b>Biaya Pengiriman : [Ojeg]</b>
                                             </td>
                                             <td colspan="1">
                                             </td>
                                             <td>
                                                 @php
-                                                    echo rupiah($pesanan->ongkir);
+                                                $ongkir = $pesanan->ongkir;
+                                                    echo rupiah($ongkir);
                                                 @endphp
                                             </td>
                                         </tr>
@@ -189,7 +187,8 @@
                                             </td>
                                             <td>
                                                 @php
-                                                    echo rupiah($pesanan->total_bayar);
+                                                $total_bayar = $pesanan->total_bayar;
+                                                    echo rupiah($total_bayar);
                                                 @endphp
                                             </td>
                                         </tr>

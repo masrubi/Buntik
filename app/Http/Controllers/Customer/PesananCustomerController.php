@@ -20,7 +20,7 @@ class PesananCustomerController extends Controller
      *
      */
 
-    public function get_ongkir($id_kota, $berat)
+   /* public function get_ongkir($id_kabupaten, $berat)
     {
         $curl = curl_init();
 
@@ -32,7 +32,7 @@ class PesananCustomerController extends Controller
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "origin=399&destination=" . $id_kota . "&weight=" . $berat . "&courier=jne",
+            CURLOPT_POSTFIELDS => "origin=399&destination=" . $id_kabupaten . "&weight=" . $berat . "&courier=jne",
             CURLOPT_HTTPHEADER => array(
                 "content-type: application/x-www-form-urlencoded",
                 "key: f201c33f7b1021a48e2a76125bfa5e15"
@@ -52,12 +52,12 @@ class PesananCustomerController extends Controller
             return $provinsi;
         }
     }
-
+*/
     public function index()
     {
         $pesanan_paid = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
             ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-            ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+            ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten','user_alamat.nama_kecamatan', 'user_alamat.nama_desa')
             ->where('pesanan.id_user', Auth::user()->id)
             ->where(function($query){
                 $query->where('pesanan.status', 'menunggu pembayaran')
@@ -70,7 +70,7 @@ class PesananCustomerController extends Controller
 
             $ongoing = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
             ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-            ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+            ->select('pesanan.*', 'produk_tani.*', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten','user_alamat.nama_kecamatan', 'user_alamat.nama_desa')
             ->where('pesanan.id_user', Auth::user()->id)
             ->where('pesanan.status', 'Pesanan Di Terima')
             ->orderBy('pesanan.updated_at', 'desc')
@@ -78,7 +78,7 @@ class PesananCustomerController extends Controller
 
             $kirim = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
             ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-            ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+            ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten','user_alamat.nama_kecamatan', 'user_alamat.nama_desa')
             ->where('pesanan.id_user', Auth::user()->id)
             ->where('pesanan.status', 'Barang Dalam Pengiriman')
             ->orderBy('pesanan.updated_at', 'desc')
@@ -86,7 +86,7 @@ class PesananCustomerController extends Controller
 
             $tagihan = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
             ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
-            ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kota')
+            ->select('pesanan.*', 'produk_tani.nama_produk', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten', 'user_alamat.nama_kecamatan', 'user_alamat.nama_desa')
             ->where('pesanan.id_user', Auth::user()->id)
             ->where('pesanan.dp_status', 'tagihan deliver')
             ->orderBy('pesanan.updated_at', 'desc')
@@ -111,94 +111,81 @@ class PesananCustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        if ($request->alamat_kirim == NULL) {
-            return back()->with('error', 'Proses Gagal Wajib Memilih Salah Satu Alamat Pengiriman');
-        }
-
-        $id_keranjang = $request->id_keranjang;
-        $harga_variasi = $request->variasi_harga;
-        $harga_semai = $request->semai_harga;
-        if ($harga_semai == null) {
-            $total_semai = "0";
-        }
-        if ($harga_variasi == null) {
-            $total_variasi = "0";
-        }
-        $total_variasi = array_sum(explode(',', $harga_variasi));
-        $total_semai = array_sum(explode(',', $harga_semai));
-
-        $kota = $request->alamat_kirim;
-        $kota_result = explode('|', $kota);
-        $id_kota = $kota_result[0];
-        $id_alamat = $kota_result[1];
-
-        $keranjang = Keranjang::join('produk_tani', 'keranjang.id_produk', '=', 'produk_tani.id_produk')
-            ->select('keranjang.*', 'produk_tani.*')
-            ->find($id_keranjang);
-
-
-        if ($keranjang->total <= 11) {
-            $total = $keranjang->total;
-            $harga = $keranjang->harga_produk1;
-            $jumlah = $harga * $total;
-        } elseif ($keranjang->total <= 23) {
-            $total = $keranjang->total;
-            $harga = $keranjang->harga_produk2;
-            $jumlah = $harga * $total;
-        } elseif ($keranjang->total <= 50) {
-            $total = $keranjang->total;
-            $harga = $keranjang->harga_produk3;
-            $jumlah = $harga * $total;
-        } elseif ($keranjang->total <= 100) {
-            $total = $keranjang->total;
-            $harga = $keranjang->harga_produk4;
-            $jumlah = $harga * $total;
-        } elseif ($keranjang->total <= 200) {
-            $total = $keranjang->total;
-            $harga = $keranjang->harga_produk5;
-            $jumlah = $harga * $total;
-        }
-
-        $berat = $total * 145;
-        $ongkir = $this->get_ongkir($id_kota, $berat);
-
-        foreach ($ongkir as $ongkir) {
-            // dd($ongkir['costs'][1]);
-            $cost = $ongkir['costs'][1];
-            foreach ($cost as $costs) {
-                $costs = $cost['cost'];
-                foreach ($costs as $costs) {
-                    $harga_ongkir = $costs['value'];
-                }
-            }
-        }
-
-        $total_bayar = $jumlah + $harga_ongkir + $total_variasi + $total_semai;
-
-        Pesanan::create([
-            'id_user' => Auth::user()->id,
-            'id_produk' => $keranjang->id_produk,
-            'quantity' => $keranjang->total,
-            'id_alamat' => $id_alamat,
-            'id_kota'   => $id_kota,
-            'variasi'   => $request->variasi,
-            'variasi_harga' => $harga_variasi,
-            'variasi_total' => $total_variasi,
-            'semai'   => $request->semai,
-            'semai_harga' => $harga_semai,
-            'semai_total' => $total_semai,
-            'note_semai_variasi' => $request->note,
-            'bayar' => $jumlah,
-            'ongkir' => $harga_ongkir,
-            'total_bayar' => $total_bayar,
-            'status' => "menunggu pembayaran",
-        ]);
-
-        Keranjang::find($id_keranjang)->delete();
-
-        return to_route('pesanan.index');
+{
+    // Validasi jika alamat pengiriman belum dipilih
+    if ($request->alamat_kirim === null) {
+        return back()->with('error', 'Proses Gagal Wajib Memilih Salah Satu Alamat Pengiriman');
     }
+
+    // Mendapatkan id keranjang dan memproses harga variasi dan harga semai
+    $id_keranjang = $request->id_keranjang;
+    $harga_variasi = $request->variasi_harga ?? '0';
+    $harga_semai = $request->semai_harga ?? '0';
+
+    // Hitung total variasi dan semai
+    $total_variasi = array_sum(explode(',', $harga_variasi));
+    $total_semai = array_sum(explode(',', $harga_semai));
+
+    // Memproses data kabupaten dari request
+    $kabupaten = explode('|', $request->alamat_kirim);
+    $id_kabupaten = $kabupaten[0] ?? null;
+    $id_alamat = $kabupaten[1] ?? null;
+
+    // Validasi jika kabupaten atau alamat tidak valid
+    if ($id_kabupaten === null || $id_alamat === null) {
+        return back()->with('error', 'Format alamat pengiriman tidak valid.');
+    }
+
+    // Ambil data keranjang
+    $keranjang = Keranjang::join('produk_tani', 'keranjang.id_produk', '=', 'produk_tani.id_produk')
+        ->select('keranjang.*', 'produk_tani.*')
+        ->find($id_keranjang);
+
+    if (!$keranjang) {
+        return back()->with('error', 'Data keranjang tidak ditemukan.');
+    }
+
+    // Hitung total harga produk
+    $total = $keranjang->total;
+    $harga_produk = $keranjang->harga_produk;
+    $jumlah = $harga_produk * $total;
+
+    // Asumsikan berat produk = jumlah total
+    $berat = $total;
+
+    // Ongkir
+    $ongkir = 0; // Jika tidak ada layanan ongkir, tetapkan 0
+    $harga_ongkir = $ongkir;
+
+    // Hitung total pembayaran
+    $total_bayar = $jumlah + $harga_ongkir + $total_variasi + $total_semai;
+
+    // Simpan data pesanan ke database
+    Pesanan::create([
+        'id_user' => Auth::user()->id,
+        'id_produk' => $keranjang->id_produk,
+        'quantity' => $keranjang->total,
+        'id_alamat' => $id_alamat,
+        'id_kabupaten'   => $id_kabupaten,
+        'variasi'   => $request->variasi,
+        'variasi_harga' => $harga_variasi,
+        'variasi_total' => $total_variasi,
+        'semai'   => $request->semai,
+        'semai_harga' => $harga_semai,
+        'semai_total' => $total_semai,
+        'note_semai_variasi' => $request->note,
+        'bayar' => $jumlah,
+        'ongkir' => $harga_ongkir,
+        'total_bayar' => $total_bayar,
+        'status' => "menunggu pembayaran",
+    ]);
+
+    // Hapus keranjang setelah pesanan disimpan
+    Keranjang::find($id_keranjang)->delete();
+
+    // Redirect ke halaman pesanan
+    return to_route('pesanan.index')->with('success', 'Pesanan berhasil dibuat.');
+}
 
     /**
      * Display the specified resource.
@@ -211,7 +198,7 @@ class PesananCustomerController extends Controller
         $pesanan = Pesanan::join('produk_tani', 'produk_tani.id_produk', '=', 'pesanan.id_produk')
         ->join('user_alamat', 'user_alamat.id_user_alamat', '=', 'pesanan.id_alamat')
         ->join('users', 'users.id', '=', 'pesanan.id_user')
-        ->select('pesanan.*', 'produk_tani.*', 'user_alamat.no_telp','user_alamat.alamat','user_alamat.nama_penerima', 'user_alamat.nama_prov', 'user_alamat.nama_kota', 'users.*')
+        ->select('pesanan.*', 'produk_tani.*', 'user_alamat.no_telp','user_alamat.alamat','user_alamat.nama_penerima', 'user_alamat.nama_prov', 'user_alamat.nama_kabupaten','user_alamat.nama_kecamatan', 'user_alamat.desa' ,'users.*')
         ->find($id);
 
         return view('customer.pesanan.pesanan_cetak', compact(['pesanan']));
@@ -231,7 +218,9 @@ class PesananCustomerController extends Controller
                 'pesanan.*',
                 'produk_tani.*',
                 'user_alamat.nama_prov',
-                'user_alamat.nama_kota',
+                'user_alamat.nama_kabupaten',
+                'user_alamat.nama_kecamatan',
+                'user_alamat.nama_desa',
                 'user_alamat.alamat',
                 'user_alamat.kode_pos',
                 'user_alamat.nama_penerima',
@@ -241,9 +230,9 @@ class PesananCustomerController extends Controller
 
         $rekening = Rekening::get();
 
-        $id_kota = $pesanan->id_kota;
-        $berat = $pesanan->quantity * 145;
-        $ongkir = $this->get_ongkir($id_kota, $berat);
+        $id_kabupaten = $pesanan->id_kabupaten;
+        $berat = $pesanan->quantity * 1;
+        $ongkir = 0;
 
         // dd($ongkir);
         return view('customer.pesanan.pesanan_edit', compact(['pesanan', 'ongkir', 'rekening']));

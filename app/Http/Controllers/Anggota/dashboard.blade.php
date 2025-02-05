@@ -23,22 +23,41 @@
                 <div class="col-xl-6">
                     <div class="row">
                         @php
-                            $total_penjualan = DB::Table('pesanan')
-                                ->where('status', 'Barang Dalam Pengiriman')
-                                ->orWhere('status', 'selesai')
-                                ->get();
-                            $total_customer = DB::Table('users')
-                                ->where('id', '!=', Auth::user()->id)
-                                ->get();
-                            $total_pendapatan = DB::Table('pesanan')
-                                ->select(DB::raw('SUM(bayar) as total_pendapatan'))
-                                ->where('status', 'selesai')
-                                ->get();
-                            $total_produk = DB::Table('pesanan')
-                                ->select(DB::raw('SUM(quantity) as total_produk'))
-                                ->where('status', 'selesai')
-                                ->get();
-                        @endphp
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\DB;
+
+    // Ambil user yang sedang login
+    $user = Auth::user();
+
+    // Total Penjualan (Barang Dalam Pengiriman atau Selesai)
+    $total_penjualan = DB::table('pesanan')
+        ->where('id_user', $user->id) // Filter hanya pesanan milik anggota
+        ->where(function ($query) {
+            $query->where('status', 'Barang Dalam Pengiriman')
+                  ->orWhere('status', 'selesai');
+        })
+        ->count(); // Langsung return integer
+
+    // Total Customer (Jumlah Customer Unik dari pesanan)
+    $total_customer = DB::table('pesanan')
+        ->where('id_user', $user->id) // Filter pesanan milik anggota
+        ->distinct('id_customer') // Hindari duplikasi customer
+        ->count('id_customer'); // Hitung jumlah customer unik
+
+    // Total Pendapatan (SUM dari bayar pada pesanan dengan status 'selesai')
+    $total_pendapatan = DB::table('pesanan')
+        ->where('id_user', $user->id) // Filter pesanan milik anggota
+        ->where('status', 'selesai')
+        ->sum('bayar'); // Langsung return integer
+
+    // Total Produk Terjual (SUM dari quantity pada pesanan dengan status 'selesai')
+    $total_produk = DB::table('pesanan')
+        ->where('id_user', $user->id) // Filter pesanan milik anggota
+        ->where('status', 'selesai')
+        ->sum('quantity'); // Langsung return integer
+@endphp
+
+                    
                         <div class="col-xl-6 col-md-6">
                             <div class="card">
                                 <div class="card-body">

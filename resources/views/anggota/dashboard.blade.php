@@ -23,22 +23,41 @@
                 <div class="col-xl-6">
                     <div class="row">
                         @php
-                            $total_penjualan = DB::Table('pesanan')
-                                ->where('status', 'Barang Dalam Pengiriman')
-                                ->orWhere('status', 'selesai')
-                                ->get();
-                            $total_customer = DB::Table('users')
-                                ->where('id', '!=', Auth::user()->id)
-                                ->get();
-                            $total_pendapatan = DB::Table('pesanan')
-                                ->select(DB::raw('SUM(bayar) as total_pendapatan'))
-                                ->where('status', 'selesai')
-                                ->get();
-                            $total_produk = DB::Table('pesanan')
-                                ->select(DB::raw('SUM(quantity) as total_produk'))
-                                ->where('status', 'selesai')
-                                ->get();
-                        @endphp
+                        use Illuminate\Support\Facades\Auth;
+                        use Illuminate\Support\Facades\DB;
+                    
+                        // Ambil user yang sedang login
+                        $user = Auth::user();
+                    
+                        // Total Penjualan (Barang Dalam Pengiriman atau Selesai)
+                        $total_penjualan = DB::table('pesanan')
+                            ->where('id_user', $user->id) // Filter hanya pesanan milik anggota
+                            ->where(function ($query) {
+                                $query->where('status', 'Barang Dalam Pengiriman')
+                                      ->orWhere('status', 'selesai');
+                            })
+                            ->count(); // Langsung return integer
+                    
+                        // Total Customer (Jumlah Customer Unik dari pesanan)
+                        $total_customer = DB::table('pesanan')
+                            ->where('id_user', $user->id) // Filter pesanan milik anggota
+                            ->distinct('id_customer') // Hindari duplikasi customer
+                            ->count('id_customer'); // Hitung jumlah customer unik
+                    
+                        // Total Pendapatan (SUM dari bayar pada pesanan dengan status 'selesai')
+                        $total_pendapatan = DB::table('pesanan')
+                            ->where('id_user', $user->id) // Filter pesanan milik anggota
+                            ->where('status', 'selesai')
+                            ->sum('bayar'); // Langsung return integer
+                    
+                        // Total Produk Terjual (SUM dari quantity pada pesanan dengan status 'selesai')
+                        $total_produk = DB::table('pesanan')
+                            ->where('id_user', $user->id) // Filter pesanan milik anggota
+                            ->where('status', 'selesai')
+                            ->sum('quantity'); // Langsung return integer
+                    @endphp
+                    
+
                         <div class="col-xl-6 col-md-6">
                             <div class="card">
                                 <div class="card-body">
@@ -49,7 +68,7 @@
                                                 <i class="mdi mdi-cart-outline text-primary font-size-20"></i>
                                             </span>
                                         </div>
-                                        <h5 class="font-size-22">{{ $total_penjualan->count() }}</h5>
+                                        <h5 class="font-size-22">{{ $total_penjualan }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +86,7 @@
                                                 <i class="mdi mdi-account-outline text-success font-size-20"></i>
                                             </span>
                                         </div>
-                                        <h5 class="font-size-22">{{ $total_customer->count() }}</h5>
+                                        <h5 class="font-size-22">{{ $total_customer }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -87,18 +106,20 @@
 
                                                 <div class="mt-4 mt-sm-0">
                                                     @php
+                                                    if (!function_exists('rupiah')) {
                                                         function rupiah($angka)
                                                         {
                                                             $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
                                                             return $hasil_rupiah;
                                                         }
+                                                    }
                                                     @endphp
 
                                                     <div id="list-chart-1" class="apex-charts" dir="ltr"></div>
                                                     <p class="text-muted mb-2 mt-2 pt-1">Total Pendapatan:</p>
-                                                    @foreach ($total_pendapatan as $total_pendapatan)
-                                                        <h5 class="font-size-18 mb-1">@php echo rupiah($total_pendapatan->total_pendapatan) @endphp</h5>
-                                                    @endforeach
+                                                    
+                                                        <h5 class="font-size-18 mb-1">@php echo rupiah($total_pendapatan) @endphp</h5>
+                                                    
 
                                                 </div>
                                             </div>
@@ -106,9 +127,9 @@
                                                 <div class="mt-4 mt-sm-0">
                                                     <div id="list-chart-2" class="apex-charts" dir="ltr"></div>
                                                     <p class="text-muted mb-2 mt-2 pt-1">Produk Terjual:</p>
-                                                    @foreach ($total_produk as $total_produk)
-                                                        <h5 class="font-size-18 mb-1">{{ $total_produk->total_produk }}</h5>
-                                                    @endforeach
+                                                    
+                                                        <h5 class="font-size-18 mb-1">{{ $total_produk }}</h5>
+                                                    
 
                                                 </div>
                                             </div>
@@ -159,8 +180,8 @@
                 data: {
                     @php
                         $data_produk = DB::table('pesanan')
-                        ->join('produk','produk.id_produk','=','pesanan.id_produk')
-                        ->select('pesanan.*','produk.nama_produk')
+                        ->join('produk_tani','produk_tani.id_produk','=','pesanan.id_produk')
+                        ->select('pesanan.*','produk_tani.nama_produk')
                         ->where('pesanan.status','selesai')
                         ->orWhere('pesanan.status','Barang Dalam Pengiriman')
                         ->get();
