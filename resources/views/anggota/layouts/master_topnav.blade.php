@@ -26,7 +26,45 @@
             <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
                 <i class="mdi mdi-menu"></i>
             </button>
+            @php
+                $user = Auth::user();
+                $kelompokTani = App\Models\KelompokTani::where('id_user', $user->id)->first();
+            @endphp
 
+            <div class="d-flex align-items-center">
+                <!-- Foto Profil -->
+                @php
+                    $fotoProfil = $user->foto_profile
+                        ? asset('foto_profile/' . $user->foto_profile) // Pastikan file ada di storage
+                        : asset('assets/images/default-user.png'); // Default jika tidak ada foto
+                @endphp
+
+
+                <h6 class="fw-bold mb-1" style="margin-right: 15px">
+                    Kolaborasi Dengan </h6>
+
+                <img src="{{ $fotoProfil }}" alt="User Avatar" class="rounded-circle shadow-sm border" width="50"
+                    height="50" style="margin-right: 15px">
+
+                <table>
+                    <tr>
+                        <td>
+                            <h6 class="fw-bold text-primary mb-1" style="margin-right: 15px">
+                                {{ Str::title($kelompokTani->nama_kelompok) }}</h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-1 text-muted small">
+                                <i class="fas fa-map-marker-alt text-danger"></i>
+                                {{ $kelompokTani->desa }}, {{ $kelompokTani->kecamatan }},
+                                {{ Str::title($kelompokTani->kabupaten) }},
+                                {{ $kelompokTani->lokasi }}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         @php
             $notif_topnav_pesanan = DB::table('pesanan')
@@ -53,6 +91,10 @@
                 </a>
             </div>
         </div>
+
+
+
+
 
         <div class="d-flex">
             <div class="dropdown d-none d-lg-inline-block">
@@ -91,21 +133,22 @@
                     </div>
                     <div data-simplebar style="max-height: 230px;">
                         @if ($notif_topnav_pesanan_onpaid->count() > 0)
-                        <a href="{{ route('pesananAnggota.index') }}" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="avatar-xs me-3">
-                                    <span class="avatar-title bg-danger rounded-circle font-size-16">
-                                        <i class="mdi mdi-check text-white"></i>
-                                    </span>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">Permintaan Konfirmasi</h6>
-                                    <div class="font-size-13 text-muted">
-                                        <p class="mb-1">{{$notif_topnav_pesanan_onpaid->count() }} Orderan Meminta Konfirmasi Pembayaran</p>
+                            <a href="{{ route('pesananAnggota.index') }}" class="text-reset notification-item">
+                                <div class="media">
+                                    <div class="avatar-xs me-3">
+                                        <span class="avatar-title bg-danger rounded-circle font-size-16">
+                                            <i class="mdi mdi-check text-white"></i>
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="mt-0 mb-1">Permintaan Konfirmasi</h6>
+                                        <div class="font-size-13 text-muted">
+                                            <p class="mb-1">{{ $notif_topnav_pesanan_onpaid->count() }} Orderan
+                                                Meminta Konfirmasi Pembayaran</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                         @endif
 
                         @if ($notif_topnav_pesanan_berjalan->count() > 0)
@@ -138,12 +181,12 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @if (Auth::user()->foto_profile == NULL)
-                    <img class="rounded-circle header-profile-user" src="/buntik/default.jpg"
-                        alt="Header Avatar">
+                    @if (Auth::user()->foto_profile == null)
+                        <img class="rounded-circle header-profile-user" src="/buntik/default.jpg"
+                            alt="Header Avatar">
                     @else
-                    <img class="rounded-circle header-profile-user" src="/foto_profile/{{ Auth::user()->foto_profile }}"
-                        alt="Header Avatar">
+                        <img class="rounded-circle header-profile-user"
+                            src="/foto_profile/{{ Auth::user()->foto_profile }}" alt="Header Avatar">
                     @endif
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
@@ -167,7 +210,6 @@
                     <i class="mdi mdi-cog-outline font-size-20"></i>
                 </button>
             </div> --}}
-
         </div>
     </div>
 </header>
