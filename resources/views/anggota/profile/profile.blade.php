@@ -9,7 +9,11 @@
                     <h4>My Profile</h4>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                        <li class="breadcrumb-item active">My Profile</li>
+                        <li class="breadcrumb-item active"><h5 class="font-size-14">{{ Str::title($kelompokTani->nama_kelompok) }}</h5>
+                            <p class="mb-1">
+                                {{ $kelompokTani->alamat . ', ' . $kelompokTani->desa . ', ' . $kelompokTani->kecamatan . ', ' . $kelompokTani->kabupaten . ' [' . $kelompokTani->provinsi . ']' }}
+                            </p>
+                            <p class="mb-0">Tlp. {{ $kelompokTani->lokasi }}</p></li>
                     </ol>
                 </div>
             </div>
@@ -101,7 +105,7 @@
                                         <label for="validationCustom01" class="form-label">Email Pengguna</label>
                                         <input class="form-control @error('email') is-invalid @enderror" name="email"
                                             type="email" placeholder="Email Pengguna" id="example-text-input"
-                                            value="{{ Str::title(Auth::user()->email) }}">
+                                            value="{{ str::title(Auth::user()->email) }}">
                                         @error('email')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -201,6 +205,51 @@
 
 
                 <!-- Alamat -->
+              
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="provinsi" class="form-label">provinsi</label>
+                        <input class="form-control @error('provinsi') is-invalid @enderror"
+                            name="provinsi" type="text" placeholder="provinsi" id="provinsi"
+                            value="{{ old('provinsi', $kelompokTani->provinsi ?? '') }}" required>
+                        @error('provinsi')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="kabupaten" class="form-label">kabupaten</label>
+                        <input class="form-control @error('lokasi') is-invalid @enderror"
+                            name="kabupaten" type="text" placeholder="kabupaten" id="kabupaten"
+                            value="{{ old('kabupaten', $kelompokTani->kabupaten ?? '') }}" required>
+                        @error('kabupaten')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="kecamatan" class="form-label">kecamatan</label>
+                        <input class="form-control @error('kecamatan') is-invalid @enderror"
+                            name="kecamatan" type="text" placeholder="kecamatan" id="kecamatan"
+                            value="{{ old('kecamatan', $kelompokTani->kecamatan ?? '') }}" required>
+                        @error('kecamatan')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="desa" class="form-label">Desa</label>
+                        <input class="form-control @error('desa') is-invalid @enderror"
+                            name="desa" type="text" placeholder="Lokasi" id="desa"
+                            value="{{ old('desa', $kelompokTani->desa ?? '') }}" required>
+                        @error('desa')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat Lengkap</label>
@@ -212,6 +261,74 @@
                         @enderror
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="lokasi" class="form-label">Lokasi</label>
+                        <input class="form-control @error('lokasi') is-invalid @enderror"
+                            name="lokasi" type="text" placeholder="Lokasi" id="lokasi"
+                            value="{{ old('lokasi', $kelompokTani->lokasi ?? '') }}" required>
+                        @error('lokasi')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="modal_gedung" class="form-label">Modal Gedung</label>
+                        <input class="form-control @error('modal_gedung') is-invalid @enderror"
+                            name="modal_gedung" type="text" placeholder="5000000" id="modal_gedung"
+                            value="{{ old('modal_gedung', $kelompokTani->modal_gedung ?? '') }}" required>
+                        @error('modal_gedung')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="modal_pupuk" class="form-label">Modal Pupuk</label>
+                        <input class="form-control @error('modal_pupuk') is-invalid @enderror"
+                            name="modal_pupuk" type="text" placeholder="5000000" id="modal_pupuk"
+                            value="{{ old('modal_pupuk', $kelompokTani->modal_pupuk ?? '') }}" required>
+                        @error('modal_pupuk')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <label for="modal_bibit" class="form-label">Modal Bibit</label>
+                        <input class="form-control @error('modal_bibit') is-invalid @enderror"
+                            name="modal_bibit" type="text" placeholder="5" id="modal_bibit"
+                            value="{{ old('modal_bibit', $kelompokTani->modal_bibit ?? '') }}" required>
+                        @error('modal_bibit')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="modal_alat_operasional" class="form-label">Modal Operasional</label>
+                    <input class="form-control @error('modal_alat_operasional') is-invalid @enderror"
+                        name="modal_alat_operasional" type="text" placeholder="1000000" id="modal_alat_operasional"
+                        value="{{ old('modal_alat_operasional', $kelompokTani->modal_alat_operasional ?? '') }}" required>
+                    @error('modal_alat_operasional')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <input class="form-check-input float-end" type="radio"
+                        name="alamat_kirim"
+                        value="{{ $kelompokTani->id_kabupaten . '|' . $kelompokTani->id_user }}"
+                        id="formRadios2">Pilih Alamat
+                </div>
+                {{-- <a href="#" class="float-end ms-1">Edit</a> --}}
+                <h5 class="font-size-14">{{ Str::title($kelompokTani->nama_kelompok) }}</h5>
+                <p class="mb-1">
+                    {{ $kelompokTani->alamat . ', ' . $kelompokTani->desa . ', ' . $kelompokTani->kecamatan . ', ' . $kelompokTani->kabupaten . ' [' . $kelompokTani->provinsi . ']' }}
+                </p>
+                <p class="mb-0">Tlp. {{ $kelompokTani->lokasi }}</p>
+            </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>

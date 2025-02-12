@@ -63,6 +63,8 @@ class ProfileAnggotaController extends Controller
         return back()->with('success', 'Berhasil memperbarui profil');
     }
 
+    
+
     public function update_kelompok_tani(Request $request)
     {
         $request->validate([
@@ -76,6 +78,11 @@ class ProfileAnggotaController extends Controller
             'kecamatan' => 'required',
             'kabupaten' => 'required',
             'provinsi' => 'required',
+            'lokasi' => 'required',
+                'modal_gedung' => 'required',
+                'modal_pupuk' => 'required',
+                'modal_bibit' => 'required',
+                'modal_alat_operasional' => 'required',
         ]);
 
         $kelompokTani = KelompokTani::updateOrCreate(
@@ -120,5 +127,7 @@ class ProfileAnggotaController extends Controller
         $desa = Desa::where('kecamatan_id', $kecamatanId)->get();
         return response()->json(['desa' => $desa]);  // Mengembalikan data desa dalam format JSON
     }
+
+
 
 }

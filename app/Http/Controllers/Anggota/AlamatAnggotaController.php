@@ -126,3 +126,71 @@ class AlamatAnggotaController extends Controller
         ->with(compact('id_anggota')); // Menggunakan compact di sini
     }
 }
+
+
+
+
+
+===
+public function update_kelompok_tani(Request $request)
+{
+    $request->validate([
+        'nama_kelompok' => 'required',
+        'id_provinsi' => 'required',
+        'id_kabupaten' => 'required',
+        'id_kecamatan' => 'required',
+        'id_desa' => 'required',
+        'alamat' => 'required',
+        'desa' => 'required',
+        'kecamatan' => 'required',
+        'kabupaten' => 'required',
+        'provinsi' => 'required',
+        'lokasi' => 'required',
+            'modal_gedung' => 'required',
+            'modal_pupuk' => 'required',
+            'modal_bibit' => 'required',
+            'modal_alat_operasional' => 'required',
+    ]);
+
+    $kelompokTani = KelompokTani::updateOrCreate(
+        ['id_user' => Auth::id()],
+        [
+            'nama_kelompok' => $request->nama_kelompok,
+            'id_provinsi' => $request->id_provinsi,
+            'id_kabupaten' => $request->id_kabupaten,
+            'id_kecamatan' => $request->id_kecamatan,
+            'id_desa' => $request->id_desa,
+            'alamat' => $request->alamat,
+            'desa' => $request->desa,
+            'kecamatan' => $request->kecamatan,
+            'kabupaten' => $request->kabupaten,
+            'provinsi' => $request->provinsi,
+            'lokasi' => $request->lokasi,
+            'modal_gedung' => $request->modal_gedung,
+            'modal_pupuk' => $request->modal_pupuk,
+            'modal_bibit' => $request->modal_bibit,
+            'modal_alat_operasional' => $request->modal_alat_operasional,
+        ]
+    );
+
+    return back()->with('success', 'Data kelompok tani berhasil diperbarui');
+}
+
+public function getKabupaten($provinsiId)
+{
+    
+    $kabupaten = Kabupaten::where('provinsi_id', $provinsiId)->get();
+    return response()->json(['kabupaten' => $kabupaten]);  // Mengembalikan data kabupaten dalam format JSON
+}
+
+public function getKecamatan($kabupatenId)
+{
+    $kecamatan = Kecamatan::where('kabupaten_id', $kabupatenId)->get();
+    return response()->json(['kecamatan' => $kecamatan]);  // Mengembalikan data kecamatan dalam format JSON
+}
+
+public function getDesa($kecamatanId)
+{
+    $desa = Desa::where('kecamatan_id', $kecamatanId)->get();
+    return response()->json(['desa' => $desa]);  // Mengembalikan data desa dalam format JSON
+}
