@@ -195,6 +195,7 @@ Route::middleware(['auth', 'user-access:anggota', 'check-profile-completion'])->
     Route::get('/anggota/profile', [ProfileAnggotaController::class, 'index'])->name('anggota.profile');
     Route::post('/anggota/profile/store', [ProfileAnggotaController::class, 'store'])->name('anggota.profile_store');
     Route::put('/anggota/profile/update/{profile}', [ProfileAnggotaController::class, 'update_profile'])->name('anggota.profile_update');
+    Route::put('/anggota/profile/update_kelompok_tani/{profile}', [ProfileAnggotaController::class, 'update_kelompok_tani'])->name('anggota.update_kelompok_tani');
 
     Route::get('/anggota/alamat/alamat_anggota/{alamat}', [AlamatAnggotaController::class, 'create_alamat_anggota'])->name('anggota.alamat_anggota');
     Route::post('/anggota/alamat/alamat_anggota/store', [AlamatAnggotaController::class, 'store_alamat_anggota'])->name('anggota.alamat_anggotat_store');
